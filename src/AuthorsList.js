@@ -1,14 +1,12 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 // Components
 import AuthorCard from "./AuthorCard";
 import SearchBar from "./SearchBar";
+import { fetchAuthor } from "./redux/actions";
 
 class AuthorsList extends Component {
-  state = {
-    filteredAuthors: this.props.authors
-  };
-
   filterAuthors = query => {
     query = query.toLowerCase();
     let filteredAuthors = this.props.authors.filter(author => {
@@ -34,4 +32,19 @@ class AuthorsList extends Component {
   }
 }
 
-export default AuthorsList;
+const mapStateToProps = state => {
+  return {
+    authors: state.authorState.authors
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchAuthor: () => dispatch(fetchAuthor())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AuthorsList);

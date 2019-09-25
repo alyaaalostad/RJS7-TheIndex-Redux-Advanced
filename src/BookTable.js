@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import BookRow from "./BookRow";
+import { fetchBook } from "./redux/actions";
 
 class BookTable extends Component {
   render() {
@@ -22,4 +24,19 @@ class BookTable extends Component {
   }
 }
 
-export default BookTable;
+const mapStateToProps = state => {
+  return {
+    book: state.bookState.books
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchBook: () => dispatch(fetchBook())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BookTable);
